@@ -92,46 +92,6 @@ export function Dialog({ title, children, onClose, className = '' }) {
   );
 }
 
-export function AuthDialog({ locale, initialMode = 'login', onClose, onSuccess }) {
-  const [mode, setMode] = useState(initialMode);
-  const english = locale === 'en';
-  const labels = english
-    ? { login: 'Sign in', register: 'Create account', forgot: 'Reset password', email: 'Email', password: 'Password', name: 'Full name', confirm: 'Confirm password', submit: 'Continue', toLogin: 'Back to sign in', toRegister: 'Create an account', toForgot: 'Forgot password?', success: 'A reset link is ready in this demo.', passwordMismatch: 'Passwords do not match.' }
-    : { login: 'Нэвтрэх', register: 'Бүртгүүлэх', forgot: 'Нууц үг сэргээх', email: 'Имэйл', password: 'Нууц үг', name: 'Овог нэр', confirm: 'Нууц үг давтах', submit: 'Үргэлжлүүлэх', toLogin: 'Нэвтрэх рүү буцах', toRegister: 'Бүртгэл үүсгэх', toForgot: 'Нууц үгээ мартсан уу?', success: 'Сэргээх холбоос бэлэн боллоо.', passwordMismatch: 'Нууц үг таарахгүй байна.' };
-
-  function submit(event) {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    if (mode === 'forgot') {
-      onSuccess({ message: labels.success });
-      return;
-    }
-    if (mode === 'register' && form.get('password') !== form.get('confirmPassword')) {
-      event.currentTarget.elements.confirmPassword.setCustomValidity(labels.passwordMismatch);
-      event.currentTarget.reportValidity();
-      return;
-    }
-    onSuccess({ name: form.get('name') || '', email: form.get('email') || '' });
-  }
-
-  return (
-    <Dialog title={labels[mode]} onClose={onClose} className="auth-dialog">
-      <form className="form-stack" onSubmit={submit}>
-        {mode === 'register' && <label>{labels.name}<input name="name" autoComplete="name" required /></label>}
-        <label>{labels.email}<input name="email" type="email" autoComplete="email" required /></label>
-        {mode !== 'forgot' && <label>{labels.password}<input name="password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength="8" required /></label>}
-        {mode === 'register' && <label>{labels.confirm}<input name="confirmPassword" type="password" autoComplete="new-password" minLength="8" required onChange={(event) => event.currentTarget.setCustomValidity('')} /></label>}
-        <button className="primary-btn" type="submit">{labels.submit}</button>
-      </form>
-      <div className="auth-links">
-        {mode !== 'login' && <button className="text-btn" type="button" onClick={() => setMode('login')}>{labels.toLogin}</button>}
-        {mode === 'login' && <><button className="text-btn" type="button" onClick={() => setMode('forgot')}>{labels.toForgot}</button><button className="text-btn" type="button" onClick={() => setMode('register')}>{labels.toRegister}</button></>}
-      </div>
-      <p className="demo-note">{english ? 'Demo only. Authentication is not connected to a server.' : 'Туршилтын горим. Нэвтрэлт сервертэй холбогдоогүй.'}</p>
-    </Dialog>
-  );
-}
-
 export function SearchDialog({ locale, onClose, onSelect }) {
   const [query, setQuery] = useState('');
   const english = locale === 'en';
@@ -189,7 +149,7 @@ export function ProfileMenu({ locale, user, onClose, onProfile, onSettings, onSi
     <div className="popover-wrap profile-popover-wrap">
       <button className="popover-dismiss" type="button" aria-label={english ? 'Close profile menu' : 'Профайл цэс хаах'} onClick={onClose} />
       <section className="profile-menu">
-        <div className="profile-menu-user"><div className="avatar">{user.name.charAt(0)}</div><span><strong>{user.name}</strong><small>{user.email}</small></span></div>
+        <div className="profile-menu-user"><div className="avatar">{user.avatarUrl ? <img src={user.avatarUrl} alt="" /> : user.name.charAt(0)}</div><span><strong>{user.name}</strong><small>{user.email}</small></span></div>
         <button type="button" onClick={onProfile}>{english ? 'Edit profile' : 'Профайл засах'}</button>
         <button type="button" onClick={onSettings}>{english ? 'Preferences' : 'Тохиргоо'}</button>
         <button type="button" className="danger-action" onClick={onSignOut}>{english ? 'Sign out' : 'Гарах'}</button>
@@ -244,16 +204,6 @@ export function SettingsDialog({ locale, theme, onClose, onLocaleChange, onTheme
 
 export function EmptyState({ title, text, action, onAction }) {
   return <div className="empty-state"><span aria-hidden="true">⌕</span><strong>{title}</strong><p>{text}</p>{action && <button className="text-btn" type="button" onClick={onAction}>{action}</button>}</div>;
-}
-
-export function LoadingState({ locale }) {
-  return (
-    <div className="loading-state" role="status" aria-live="polite" aria-label={locale === 'en' ? 'Loading dashboard' : 'Самбар ачаалж байна'}>
-      <div className="loading-heading"><span /><span /></div>
-      <div className="loading-stats">{[1, 2, 3, 4].map((item) => <span key={item} />)}</div>
-      <div className="loading-panels"><span /><span /></div>
-    </div>
-  );
 }
 
 export class AppErrorBoundary extends Component {

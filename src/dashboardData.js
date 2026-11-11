@@ -1,15 +1,13 @@
+import studentNavigation from './navigation/student.js';
+import teacherNavigation from './navigation/teacher.js';
+import parentNavigation from './navigation/parent.js';
+import adminNavigation from './navigation/admin.js';
+
 export const roleMap = {
   student: {
     name: 'Түмэн-Очир',
     role: 'Сурагч',
-    nav: [
-      { page: 'overview', icon: '▦', label: 'Ерөнхий самбар' },
-      { page: 'ai', icon: '✦', label: 'AI хувийн багш' },
-      { page: 'career', icon: '◎', label: 'Мэргэжил сонголт' },
-      { page: 'exam', icon: '▤', label: 'ЕЕШ бэлтгэл' },
-      { page: 'materials', icon: '▧', label: 'Материалын сан' },
-      { page: 'progress', icon: '⌁', label: 'Сурлагын ахиц' }
-    ],
+    nav: studentNavigation,
     welcome: 'Сайн байна уу, Түмэн-Очир!',
     subtext: 'Өнөөдөр өөртөө шинэ зүйл сургах сайхан өдөр.',
     cta: 'Суралцаж эхлэх',
@@ -49,14 +47,7 @@ export const roleMap = {
   teacher: {
     name: 'Бат-Эрдэнэ',
     role: 'Багш',
-    nav: [
-      { page: 'overview', icon: '▦', label: 'Ерөнхий самбар' },
-      { page: 'classes', icon: '▣', label: 'Миний ангиуд' },
-      { page: 'students', icon: '◫', label: 'Сурагчид' },
-      { page: 'tests', icon: '✎', label: 'Тест үүсгэх' },
-      { page: 'grading', icon: '✓', label: 'Шалгалт засах' },
-      { page: 'resources', icon: '▧', label: 'Материалын сан' }
-    ],
+    nav: teacherNavigation,
     welcome: 'Сайн байна уу, Бат-Эрдэнэ!',
     subtext: 'Өнөөдрийн хичээл, ангийнхаа ахицыг эндээс удирдаарай.',
     cta: 'Шалгалт үүсгэх',
@@ -96,14 +87,7 @@ export const roleMap = {
   parent: {
     name: 'Дэлгэрмаа',
     role: 'Эцэг эх',
-    nav: [
-      { page: 'overview', icon: '▦', label: 'Ерөнхий самбар' },
-      { page: 'progress', icon: '⌁', label: 'Хүүхдийн ахиц' },
-      { page: 'attendance', icon: '◍', label: 'Ирц' },
-      { page: 'grades', icon: '◫', label: 'Дүн' },
-      { page: 'homework', icon: '✓', label: 'Даалгавар' },
-      { page: 'announcements', icon: '✦', label: 'Мэдэгдэл' }
-    ],
+    nav: parentNavigation,
     welcome: 'Сайн байна уу, Дэлгэрмаа!',
     subtext: 'Хүүхдийн сургалт, ирц, даалгаврын байдалд хяналт тавьж байна.',
     cta: 'Байдал харах',
@@ -143,14 +127,7 @@ export const roleMap = {
   admin: {
     name: 'Наранзаяа',
     role: 'Админ',
-    nav: [
-      { page: 'overview', icon: '▦', label: 'Ерөнхий самбар' },
-      { page: 'users', icon: '◫', label: 'Хэрэглэгчид' },
-      { page: 'teachers', icon: '✓', label: 'Багшид' },
-      { page: 'schools', icon: '▣', label: 'Сургууль' },
-      { page: 'content', icon: '▧', label: 'Агуулга' },
-      { page: 'reports', icon: '⌁', label: 'Тайлан' }
-    ],
+    nav: adminNavigation,
     welcome: 'Сайн байна уу, Наранзаяа!',
     subtext: 'Платформын үйл ажиллагаа, хэрэглэгч, агуулга, тайланг нэг дороос удирдах боломжтой.',
     cta: 'Систем үнэлэх',
